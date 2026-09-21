@@ -79,6 +79,18 @@
   }
   section a, footer a { color: var(--ink); }
   footer a { color: var(--grey); }
+
+  .cta {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.7rem 1.25rem;
+    background: var(--ink);
+    color: var(--cream) !important;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    font-size: 0.95rem;
+  }
+  .cta:hover { opacity: 0.88; }
 </style>
 </head>
 <body>
@@ -102,10 +114,17 @@
     <section>
       <h2>How it works</h2>
       <ol>
-        <li><strong>Order ahead</strong> — reserve before market day.</li>
+        <li><strong>Order ahead</strong> — pay and reserve before market day.</li>
         <li><strong>Buy what’s left</strong> — walk up Sunday; when it’s gone, it’s gone.</li>
         <li><strong>Delivery</strong> — ask when you order (details when you order).</li>
       </ol>
+    </section>
+
+
+    <section>
+      <h2>Order ahead</h2>
+      <p>Reserve before market day. Checkout opens in Stripe — amounts shown only there.</p>
+      <p><a class="cta" href="https://buy.stripe.com/cNi00l0lU4jP6lRgMcejK00" target="_blank" rel="noopener">Order ahead / Pay</a></p>
     </section>
 
     <section>
