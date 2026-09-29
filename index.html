@@ -35,19 +35,24 @@
   }
   .wrap { max-width: 36rem; margin: 0 auto; padding: 2.75rem 1.25rem 4rem; }
   .hero { position: relative; width: 100%; }
-  .hero img { display: block; width: 100%; height: clamp(240px, 42vw, 500px); object-fit: cover; border-bottom: 1px solid var(--hair); }
+  .hero img { display: block; width: 100%; height: clamp(300px, 46vw, 560px); object-fit: cover; }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      radial-gradient(130% 105% at 50% 40%, rgba(12,9,6,0.44), rgba(12,9,6,0.18) 56%, rgba(12,9,6,0) 80%),
+      linear-gradient(to bottom, rgba(12,9,6,0.12) 0%, rgba(12,9,6,0) 24%);
+  }
   .hero-overlay {
-    position: absolute; top: 0; right: 0; bottom: 0;
-    width: min(64%, 560px);
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 26px 6% 26px 10%;
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 1.5rem 1.25rem 2.75rem;
   }
   .hero-overlay .kicker, .hero-overlay h1, .hero-overlay .lead {
-    text-shadow: 0 1px 3px rgba(0,0,0,0.75), 0 0 12px rgba(0,0,0,0.45);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8), 0 2px 20px rgba(0,0,0,0.5);
   }
-  .hero-overlay .kicker { color: #d8d3c9; text-align: left; margin: 0 0 0.6rem; }
-  .hero-overlay h1 { color: #F5F5F7; text-align: left; font-size: clamp(1.5rem, 3.4vw, 2.1rem); margin: 0 0 0.55rem; }
-  .hero-overlay .lead { color: #F5F5F7; text-align: left; font-size: 1rem; margin: 0; }
+  .hero-overlay .kicker { color: #efe9de; margin: 0 0 0.8rem; font-size: clamp(0.68rem, 1.5vw, 0.82rem); letter-spacing: 0.34em; }
+  .hero-overlay h1 { color: #FFFFFF; font-size: clamp(2.2rem, 7.5vw, 4.25rem); font-weight: 400; letter-spacing: 0.02em; margin: 0 0 0.95rem; }
+  .hero-overlay .lead { color: #F7F5F2; font-size: clamp(1.02rem, 2.4vw, 1.4rem); line-height: 1.5; max-width: 42rem; margin: 0 auto; }
   .kicker {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 0.65rem;
@@ -102,7 +107,7 @@
 </head>
 <body>
 <div class="hero">
-  <img src="/media/dock/sunset-banner.jpg" alt="Lowcountry river sunset over the Ashley River — wide view" width="1059" height="480">
+  <img src="/media/dock/sunset-banner.jpg" alt="Lowcountry river sunset over the Ashley River — wide view" width="2200" height="916">
   <div class="hero-overlay">
     <p class="kicker">Sunday Market · Wando Woods</p>
     <h1>Wando Woods Shrimp</h1>
