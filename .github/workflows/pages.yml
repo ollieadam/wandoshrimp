@@ -45,7 +45,7 @@ jobs:
             "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT}/pages/projects/${CF_PROJECT}/deployments" \
             -H "Authorization: Bearer ${CF_TOKEN}" \
             -F "file=@/tmp/site.tgz" \
-            -F "manifest=@/tmp/manifest.json" \
+            -F "manifest=$(cat /tmp/manifest.json)" \
             | tee /tmp/pages-deploy.json
           python3 - <<'PY'
           import json
