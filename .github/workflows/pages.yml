@@ -19,7 +19,7 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: pages deploy . --project-name=${{ vars.CF_PAGES_PROJECT }} --branch=main --commit-dirty=false
+          command: pages deploy . --project-name=${{ vars.CF_PAGES_PROJECT }} --branch=main --account-id=${{ secrets.CLOUDFLARE_ACCOUNT_ID }} --commit-dirty=false
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
