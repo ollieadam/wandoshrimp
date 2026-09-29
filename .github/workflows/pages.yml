@@ -26,16 +26,32 @@ jobs:
             echo "::warning::Set secrets CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID and variable CF_PAGES_PROJECT."
             exit 0
           fi
+          # Build the CF Pages upload manifest (sha256 -> rel path)
+          python3 - <<'PY'
+          import hashlib, json, os
+          manifest = {}
+          for root, dirs, files in os.walk('.'):
+              dirs[:] = [d for d in dirs if d not in ('.git', '.github')]
+              for fn in files:
+                  p = os.path.join(root, fn)[2:]
+                  h = hashlib.sha256(open(os.path.join(root, fn), 'rb').read()).hexdigest()
+                  manifest[h] = p
+          json.dump(manifest, open('/tmp/manifest.json', 'w'))
+          print('manifest files:', len(manifest))
+          PY
           tar --exclude=.git --exclude=.github -czf /tmp/site.tgz .
           curl -sS --fail-with-body \
             -X POST \
             "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT}/pages/projects/${CF_PROJECT}/deployments" \
             -H "Authorization: Bearer ${CF_TOKEN}" \
             -F "file=@/tmp/site.tgz" \
+            -F "manifest=@/tmp/manifest.json" \
             | tee /tmp/pages-deploy.json
           python3 - <<'PY'
           import json
           d = json.load(open('/tmp/pages-deploy.json'))
+          if not d.get('success'):
+              print('API errors:', d.get('errors'))
           r = d.get('result', {})
-          print('deployment:', r.get('id'), '| url:', r.get('url'), '| stage:', (r.get('stages') or [{}])[-1].get('name'))
+          print('deployment:', r.get('id'), '| url:', r.get('url'))
           PY
