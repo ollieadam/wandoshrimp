@@ -34,7 +34,18 @@
     line-height: 1.55;
   }
   .wrap { max-width: 36rem; margin: 0 auto; padding: 2.75rem 1.25rem 4rem; }
-  .hero img { display: block; width: 100%; height: clamp(200px, 36vw, 420px); object-fit: cover; border-bottom: 1px solid var(--hair); }
+  .hero { position: relative; width: 100%; }
+  .hero img { display: block; width: 100%; height: clamp(240px, 42vw, 500px); object-fit: cover; border-bottom: 1px solid var(--hair); }
+  .hero-overlay {
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: min(64%, 560px);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 26px 6% 26px 10%;
+    background: linear-gradient(270deg, rgba(10,10,11,0.72), rgba(10,10,11,0.28) 70%, rgba(10,10,11,0) 100%);
+  }
+  .hero-overlay .kicker { color: #d8d3c9; text-align: left; margin: 0 0 0.6rem; }
+  .hero-overlay h1 { color: #F5F5F7; text-align: left; font-size: clamp(1.5rem, 3.4vw, 2.1rem); margin: 0 0 0.55rem; }
+  .hero-overlay .lead { color: #F5F5F7; text-align: left; font-size: 1rem; margin: 0; }
   .kicker {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 0.65rem;
@@ -90,12 +101,13 @@
 <body>
 <div class="hero">
   <img src="/media/dock/sunset-banner.jpg" alt="Lowcountry river sunset over the Ashley River — wide view" width="1600" height="640">
-</div>
-  <main class="wrap">
+  <div class="hero-overlay">
     <p class="kicker">Sunday Market · Wando Woods</p>
-    <img class="logo" src="/logo.png" width="240" height="135" alt="Wando Woods Shrimp">
     <h1>Wando Woods Shrimp</h1>
     <p class="lead">Whole-head shrimp by the pound for the neighborhood market. Order ahead, buy what’s left at the booth, or ask about delivery.</p>
+  </div>
+</div>
+  <main class="wrap">
 
     <section>
       <h2>Next market</h2>
