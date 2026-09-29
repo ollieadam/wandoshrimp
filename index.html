@@ -64,6 +64,11 @@
   }
   ol { margin: 0; padding-left: 1.2rem; }
   li + li { margin-top: 0.45rem; }
+  .gallery { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 0.85rem; }
+  .gallery figure { margin: 0; flex: 1 1 240px; border: 1px solid var(--hair); border-radius: 8px; overflow: hidden; background: var(--cream); }
+  .gallery a { display: block; }
+  .gallery img { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; }
+  .gallery figcaption { font-size: 0.72rem; color: var(--grey); padding: 6px 8px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: 0.04em; }
   .disclaimer {
     font-size: 0.75rem;
     color: var(--grey);
@@ -109,6 +114,20 @@
     </section>
 
 <section>
+      <h2>From the dock</h2>
+      <div class="gallery">
+        <figure>
+          <a href="/media/dock/2026-09-29_dock-sunset-1.jpg"><img src="/media/dock/2026-09-29_dock-sunset-1.jpg" alt="Dock edge at sunset — Wando Woods Shrimp" loading="lazy"></a>
+          <figcaption>Dock edge · ladder · crab trap</figcaption>
+        </figure>
+        <figure>
+          <a href="/media/dock/2026-09-29_dock-sunset-2.jpg"><img src="/media/dock/2026-09-29_dock-sunset-2.jpg" alt="Wide dock view at sunset — Wando Woods Shrimp" loading="lazy"></a>
+          <figcaption>Wide dock view, same evening</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
       <h2>Inquire</h2>
       <p><a href="mailto:decentralizedstrength@gmail.com">decentralizedstrength@gmail.com</a> — whole-head by the pound, delivery, or questions.</p>
     </section>
