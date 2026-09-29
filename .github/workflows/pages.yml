@@ -15,43 +15,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy via Pages Upload API
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: pages deploy . --project-name=${{ vars.CF_PAGES_PROJECT }} --branch=main --commit-dirty=false
         env:
-          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CF_PROJECT: ${{ vars.CF_PAGES_PROJECT }}
-        run: |
-          set -euo pipefail
-          if [[ -z "$CF_TOKEN" || -z "$CF_ACCOUNT" || -z "$CF_PROJECT" ]]; then
-            echo "::warning::Set secrets CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID and variable CF_PAGES_PROJECT."
-            exit 0
-          fi
-          # Build the CF Pages upload manifest (sha256 -> rel path)
-          python3 - <<'PY'
-          import hashlib, json, os
-          manifest = {}
-          for root, dirs, files in os.walk('.'):
-              dirs[:] = [d for d in dirs if d not in ('.git', '.github')]
-              for fn in files:
-                  p = os.path.join(root, fn)[2:]
-                  h = hashlib.sha256(open(os.path.join(root, fn), 'rb').read()).hexdigest()
-                  manifest[h] = p
-          json.dump(manifest, open('/tmp/manifest.json', 'w'))
-          print('manifest files:', len(manifest))
-          PY
-          tar --exclude=.git --exclude=.github -czf /tmp/site.tgz .
-          curl -sS --fail-with-body \
-            -X POST \
-            "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT}/pages/projects/${CF_PROJECT}/deployments" \
-            -H "Authorization: Bearer ${CF_TOKEN}" \
-            -F "file=@/tmp/site.tgz" \
-            -F "manifest=$(cat /tmp/manifest.json)" \
-            | tee /tmp/pages-deploy.json
-          python3 - <<'PY'
-          import json
-          d = json.load(open('/tmp/pages-deploy.json'))
-          if not d.get('success'):
-              print('API errors:', d.get('errors'))
-          r = d.get('result', {})
-          print('deployment:', r.get('id'), '| url:', r.get('url'))
-          PY
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Config check
+        if: vars.CF_PAGES_PROJECT == '' || env.TOKEN == '' || env.ACC == ''
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACC: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: echo "::warning::Set secrets CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID and variable CF_PAGES_PROJECT to enable auto-deploy."
