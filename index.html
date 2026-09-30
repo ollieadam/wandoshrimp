@@ -134,6 +134,12 @@
     letter-spacing: 0.04em;
   }
   @media (max-width: 560px) { .catch-grid { grid-template-columns: 1fr; } }
+  /* photo caption text hidden on request (2026-09-30) — delete this rule to bring them back */
+  .gallery figcaption, .catch-grid figcaption { display: none; }
+  .catch-video {
+    display: block; width: 100%; max-width: 21rem; margin: 1.1rem auto 0;
+    background: #000; border: 1px solid var(--hair); border-radius: 8px;
+  }
   section a, footer a { color: var(--ink); }
   footer a { color: var(--grey); }
 </style>
@@ -163,6 +169,10 @@
           <figcaption>Close-up &mdash; raw, shell on</figcaption>
         </figure>
       </div>
+      <video class="catch-video" controls playsinline preload="metadata" poster="/media/catch/catch-video-poster.jpg" width="640" height="1138" aria-label="Video of the September 29 shrimp catch being bagged">
+        <source src="/media/catch/catch-video.mp4" type="video/mp4">
+        Your browser can&rsquo;t play this video &mdash; <a href="/media/catch/catch-video.mp4">download it instead</a>.
+      </video>
       <p class="disclaimer">Photos of the September 29 catch. Stock and dates change as the catch changes &mdash; ask before you drive out.</p>
     </section>
 
